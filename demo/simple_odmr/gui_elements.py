@@ -11,7 +11,7 @@ from functools import partial
 from importlib import reload
 
 import numpy as np
-import spin_measurements
+import odmr
 from nspyre import DataSink
 from nspyre import LinePlotWidget
 from nspyre import FlexLinePlotWidget
@@ -61,7 +61,7 @@ class ODMRWidget(ExperimentWidget):
         }
 
         super().__init__(params_config, 
-                        spin_measurements,
+                        odmr,
                         'SpinMeasurements',
                         'odmr_sweep',
                         title='ODMR')
@@ -159,10 +159,10 @@ class CustomODMRWidget(QtWidgets.QWidget):
         """Runs when the 'sweep' button is pressed."""
 
         # reload the spin measurements module at runtime in case any changes were made to the code
-        reload(spin_measurements)
+        reload(odmr)
 
         # create an instance of the ODMR class that implements the experimental logic.
-        spin_meas = spin_measurements.SpinMeasurements()
+        spin_meas = odmr.SpinMeasurements()
 
         # run the sweep function in a new thread.
         self.sweep_proc.run(

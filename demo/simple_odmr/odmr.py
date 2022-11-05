@@ -78,4 +78,4 @@ class SpinMeasurements:
 
 if __name__ == '__main__':
     exp = SpinMeasurements()
-    exp.odmr_sweep('odmr', 3e9, 4e9, 30, 10)
+    exp.odmr_sweep('odmr', 3e9, 4e9, 100, 5)
