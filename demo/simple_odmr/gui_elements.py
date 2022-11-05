@@ -148,24 +148,3 @@ class CustomODMRPlotWidget(LinePlotWidget):
             freqs = avg_data[0]
             counts = avg_data[1]
             self.set_data('odmr', freqs, counts)
-
-
-# class ScrollingODMRPlotWidget(ODMRPlotWidget):
-#     def update(self):
-#         if self.sink.pop():
-#             # scrolling behavior
-#             # index of last point to plot
-#             end_idx = self.sink.idx + 1
-#             # max number of points to display simultaneously
-#             npts = 20
-#             if end_idx > npts:
-#                 # index of first point to plot
-#                 start_idx = end_idx - npts
-#             else:
-#                 start_idx = 0
-#             # update the plot
-#             self.set_data(
-#                 'ODMR',
-#                 self.sink.freqs[start_idx:end_idx] / 1e9,
-#                 self.sink.counts[start_idx:end_idx],
-#             )
