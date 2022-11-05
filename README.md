@@ -1,4 +1,4 @@
-# examples
+# Examples
 This repository contains example code that uses [nspyre](https://github.com/nspyre-org/nspyre).
 
 The "demo" folder contains example code with fake instrument drivers so that 
