@@ -22,7 +22,7 @@ import nspyre.gui.widgets.snake
 from nspyre import MainWidget
 from nspyre import MainWidgetItem
 from nspyre import nspyre_init_logger
-from nspyre import NSpyreApp
+from nspyre import nspyreApp
 
 HERE = Path(__file__).parent
 
@@ -58,12 +58,13 @@ def main():
     )
 
     # Create Qt application and apply nspyre visual settings.
-    app = NSpyreApp()
+    app = nspyreApp()
 
     # Create the GUI.
     main_widget = MainWidget(
         {
             'ODMR': MainWidgetItem(gui_elements, 'ODMRWidget', stretch=(1, 1)),
+            'CustomODMR': MainWidgetItem(gui_elements, 'CustomODMRWidget', stretch=(1, 1)),
             'Plots': {
                 'FlexLinePlotDemo': MainWidgetItem(
                     gui_elements,
