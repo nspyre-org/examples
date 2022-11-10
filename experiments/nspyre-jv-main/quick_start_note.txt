@@ -1,0 +1,14 @@
+quick start (in a new console):
+
+start data server:
+	conda activate nsp
+	(nsp) nspyre-dataserv
+
+start instrument server
+	(nsp) python ROOT_DIRECTORY\nspyre-jv\Instruments\Inserv\inserv_{name}.py
+
+start GUI:
+	N/A
+
+Use nspyre-jv in jupyter notebook
+	(nsp) jupyter notebook
