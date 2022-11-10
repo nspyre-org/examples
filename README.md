@@ -9,5 +9,10 @@ The "experiments" folder is intended for both new and old users of nspyre to
 share the code that runs their actual experiment. Hopefully by sharing our 
 code, we can all learn new and interesting ways of structuring our experiments.
 
-If you want to contribute any experiment or demo code, please submit a 
-[pull request](http://TODO).
+Unless otherwise specified, code is provided under the terms of the MIT license.
+
+## Contributing
+
+If you want to contribute code, please submit it as a 
+[pull request](http://TODO). You should include a README file with your code to 
+explain what it does.
