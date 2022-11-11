@@ -37,20 +37,32 @@ class SpinMeasurements:
             # set the signal generator amplitude for the scan (dBm).
             gw.drv.set_amplitude(6.5)
             gw.drv.set_output_en(True)
+
+            # frequencies that will be swept over in the ODMR measurement
+            frequencies = np.linspace(start_freq, stop_freq, num_points)
+
+            # for storing the experiment data
+            # python list of numpy arrays of shape (2, num_points)
             data = {'mydata' : []}
             for i in range(iterations):
-                # frequencies that will be swept over in the ODMR measurement
-                frequencies = np.linspace(start_freq, stop_freq, num_points)
-
-                # photon counts corresponding to each frequency
-                counts = np.zeros(num_points)
+                if i == 0:
+                    # photon counts corresponding to each frequency
+                    # initialize to 0 for the first run
+                    counts = np.zeros(num_points)
+                    data['mydata'].append(np.stack([frequencies/1e9, counts]))
+                else:
+                    # duplicate the last data entry which will be filled during the sweep
+                    last_entry = np.copy(data['mydata'][-1])
+                    data['mydata'].append(last_entry)
 
                 # sweep counts vs. frequency.
                 for f, freq in enumerate(frequencies):
                     # access the signal generator driver on the instrument server and set its frequency.
                     gw.drv.set_frequency(freq)
+                    # retrive the last counts entry
+                    counts = data['mydata'][-1][1]
                     # read the number of photon counts received by the photon counter.
-                    counts[f] = gw.drv.cnts(0.01)
+                    counts[f] = gw.drv.cnts(0.02)
                     # check for messages from the GUI
                     if msg_queue is not None:
                         try:
@@ -65,17 +77,14 @@ class SpinMeasurements:
                                 return
                             else:
                                 raise ValueError(f'Unrecognized command: [{o}]')
-
-                # save the current data to the data server.
-                data['mydata'].append(np.stack([frequencies/1e9, counts]))
-                odmr_data.push({'params': {'start': start_freq, 'stop': stop_freq, 'num_points': num_points, 'iterations': iterations},
-                                'title': 'Optically Detected Magnetic Resonance',
-                                'xlabel': 'Frequency (GHz)',
-                                'ylabel': 'Counts',
-                                'datasets': data
-                })
-
+                    # save the current data to the data server.
+                    odmr_data.push({'params': {'start': start_freq, 'stop': stop_freq, 'num_points': num_points, 'iterations': iterations},
+                                    'title': 'Optically Detected Magnetic Resonance',
+                                    'xlabel': 'Frequency (GHz)',
+                                    'ylabel': 'Counts',
+                                    'datasets': data
+                    })
 
 if __name__ == '__main__':
     exp = SpinMeasurements()
-    exp.odmr_sweep('odmr', 3e9, 4e9, 100, 5)
+    exp.odmr_sweep('odmr', 3e9, 4e9, 100, 2)

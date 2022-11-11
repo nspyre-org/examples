@@ -52,7 +52,7 @@ class ODMRWidget(ExperimentWidget):
             },
             'iterations': {
                 'display_text': 'Number of Experiment Repeats',
-                'widget': SpinBox(value=5, int=True, bounds=(1, None), dec=True),
+                'widget': SpinBox(value=20, int=True, bounds=(1, None), dec=True),
             },
             'dataset': {
                 'display_text': 'Data Set',

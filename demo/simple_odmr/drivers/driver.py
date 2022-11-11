@@ -34,7 +34,7 @@ class FakeInstrument:
         fwhm = 100e6
         gamma = fwhm / 2
         signal = 2000 * (2 - gamma**2/((self._frequency-3.5e9)**2 + gamma**2))
-        return signal + random.randint(-300, 300)
+        return int(signal) + random.randint(-300, 300)
 
     def output_en(self):
         return self._output_en
