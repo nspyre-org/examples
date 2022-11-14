@@ -14,5 +14,5 @@ Unless otherwise specified, code is provided under the terms of the MIT license.
 ## Contributing
 
 If you want to contribute code, please submit it as a 
-[pull request](http://TODO). You should include a README file with your code to 
+[pull request](https://nspyre.readthedocs.io/en/latest/contributing.html#forking-pull-requests). You should include a README file with your code to 
 explain what it does.
