@@ -18,7 +18,7 @@ from pathlib import Path
 import gui_elements
 import nspyre.gui.widgets.save_widget
 import nspyre.gui.widgets.flex_line_plot_widget
-import nspyre.gui.widgets.snake
+import nspyre.gui.widgets.snake_widget
 from nspyre import MainWidget
 from nspyre import MainWidgetItem
 from nspyre import nspyre_init_logger
@@ -77,7 +77,7 @@ def main():
                 )
             },
             'Save': MainWidgetItem(nspyre.gui.widgets.save_widget, 'SaveWidget', stretch=(1, 1)),
-            'Snake': MainWidgetItem(nspyre.gui.widgets.snake, 'sssss'),
+            'Snake': MainWidgetItem(nspyre.gui.widgets.snake_widget, 'sssss'),
         }
     )
     main_widget.show()
