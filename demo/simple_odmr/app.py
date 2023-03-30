@@ -16,7 +16,7 @@ from pathlib import Path
 # function does not recursively reload modules
 import gui_elements
 import nspyre.gui.widgets.save_widget
-# TODO import nspyre.gui.widgets.load_widget
+import nspyre.gui.widgets.load_widget
 import nspyre.gui.widgets.flex_line_plot_widget
 from nspyre import MainWidget
 from nspyre import MainWidgetItem
@@ -56,7 +56,7 @@ def main():
                 ),
             },
             'Save': MainWidgetItem(nspyre.gui.widgets.save_widget, 'SaveWidget', stretch=(1, 1)),
-            # TODO 'Load': MainWidgetItem(nspyre.gui.widgets.load_widget, 'LoadWidget', stretch=(1, 1)),
+            'Load': MainWidgetItem(nspyre.gui.widgets.load_widget, 'LoadWidget', stretch=(1, 1)),
         }
     )
     main_widget.show()

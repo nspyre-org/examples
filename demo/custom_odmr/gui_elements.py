@@ -129,7 +129,11 @@ class CustomODMRPlotWidget(LinePlotWidget):
         self.sink.stop()
 
     def update(self):
-        if self.sink.pop():
+        try:
+            self.sink.pop()
+        except (TimeoutError, RuntimeError):
+            pass
+        else:
             # update the plot
             avg_data = np.average(np.stack(self.sink.datasets['mydata']), axis=0)
             freqs = avg_data[0]

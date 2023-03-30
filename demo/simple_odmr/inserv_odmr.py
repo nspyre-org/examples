@@ -8,7 +8,7 @@ Date: 12/27/2021
 import logging
 from pathlib import Path
 
-from nspyre import inserv_cli
+from nspyre import serve_instrument_server_cli
 from nspyre import InstrumentServer
 from nspyre import nspyre_init_logger
 
@@ -30,4 +30,4 @@ with InstrumentServer() as inserv:
 
     # run a CLI (command-line interface) that allows the user to enter
     # commands to control the server
-    inserv_cli(inserv)
+    serve_instrument_server_cli(inserv)
