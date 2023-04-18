@@ -5,7 +5,7 @@ Author: Jacob Feder
 Date: 12/27/2021
 """
 import logging
-import random
+import numpy as np
 import time
 import math
 from rpyc.utils.classic import obtain
@@ -14,12 +14,22 @@ from rpyc.utils.classic import obtain
 logger = logging.getLogger(__name__)
 
 
-class FakeInstrument:
-    """Simulate a data acquisition device and produce some fake data"""
-    def __init__(self):
+class FakeODMRInstrument:
+    """Simulate a data acquisition device and produce some fake data."""
+    def __init__(self, fwhm=100e6, f_res=3.5e9, cps=4000, contrast=0.7):
         self._output_en = False
         self._amplitude = 0.0
         self._frequency = 100e3
+
+        # parameters for fake ODMR signal
+        # full-width at half max
+        self._fwhm = fwhm
+        # resonance frequency
+        self._f_res = f_res
+        # counts per second
+        self._cps = cps
+        # ODMR contrast
+        self._contrast = contrast
 
     def cnts(self, t: float):
         """Return the number of counts received from a fake photon counter.
@@ -31,10 +41,11 @@ class FakeInstrument:
             integer number of counts received.
         """
         time.sleep(t)
-        fwhm = 100e6
-        gamma = fwhm / 2
-        signal = 2000 * (2 - gamma**2/((self._frequency-3.5e9)**2 + gamma**2))
-        return int(signal) + random.randint(-300, 300)
+        gamma = self._fwhm / 2
+        signal = self._cps * (1 - self._contrast*gamma**2/((self._frequency-self._f_res)**2 + gamma**2))
+        # add some gaussian noise
+        noise = np.random.normal(scale=self._cps*0.05)
+        return int(signal + noise)
 
     def output_en(self):
         return self._output_en

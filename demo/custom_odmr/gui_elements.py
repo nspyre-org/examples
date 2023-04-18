@@ -54,11 +54,11 @@ class CustomODMRWidget(QtWidgets.QWidget):
                 },
                 'num_points': {
                     'display_text': 'Number of Scan Points',
-                    'widget': SpinBox(value=100, int=True, bounds=(1, None), dec=True),
+                    'widget': SpinBox(value=101, int=True, bounds=(1, None), dec=True),
                 },
                 'iterations': {
                     'display_text': 'Number of Experiment Repeats',
-                    'widget': SpinBox(value=20, int=True, bounds=(1, None), dec=True),
+                    'widget': SpinBox(value=50, int=True, bounds=(1, None), dec=True),
                 },
                 'dataset': {
                     'display_text': 'Data Set',
@@ -123,10 +123,10 @@ class CustomODMRPlotWidget(LinePlotWidget):
         self.add_plot('odmr')
         self.plot_widget.setYRange(-100, 5100)
         self.sink = DataSink('odmr')
-        self.sink.start()
+        self.sink.connect()
 
     def teardown(self):
-        self.sink.stop()
+        self.sink.disconnect()
 
     def update(self):
         try:
@@ -134,8 +134,18 @@ class CustomODMRPlotWidget(LinePlotWidget):
         except (TimeoutError, RuntimeError):
             pass
         else:
-            # update the plot
-            avg_data = np.average(np.stack(self.sink.datasets['mydata']), axis=0)
+            stacked_data = np.stack(self.sink.datasets['mydata'])
+
+            # mask the NaN entries
+            masked_data = np.ma.array(
+                stacked_data, mask=np.isnan(stacked_data)
+            )
+
+            # average the numpy arrays
+            avg_data = np.ma.average(
+                masked_data, axis=0
+            )
+
             freqs = avg_data[0]
             counts = avg_data[1]
             self.set_data('odmr', freqs, counts)

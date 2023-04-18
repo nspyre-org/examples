@@ -26,7 +26,7 @@ nspyre_init_logger(
 # create a new instrument server
 with InstrumentServer() as inserv:
     # data acquisition instrument
-    inserv.add('drv', HERE / 'drivers' / 'driver.py', 'FakeInstrument')
+    inserv.add('drv', HERE / 'drivers' / 'driver.py', 'FakeODMRInstrument')
 
     # run a CLI (command-line interface) that allows the user to enter
     # commands to control the server

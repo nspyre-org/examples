@@ -45,24 +45,19 @@ class SpinMeasurements:
             # python list of numpy arrays of shape (2, num_points)
             data = {'mydata' : []}
             for i in range(iterations):
-                if i == 0:
-                    # photon counts corresponding to each frequency
-                    # initialize to 0 for the first run
-                    counts = np.zeros(num_points)
-                    data['mydata'].append(np.stack([frequencies/1e9, counts]))
-                else:
-                    # duplicate the last data entry which will be filled during the sweep
-                    last_entry = np.copy(data['mydata'][-1])
-                    data['mydata'].append(last_entry)
+                # duplicate the last data entry which will be filled during the sweep
+                nans = np.empty(num_points)
+                nans[:] = np.nan
+                data['mydata'].append(np.stack([frequencies/1e9, nans]))
 
                 # sweep counts vs. frequency.
                 for f, freq in enumerate(frequencies):
                     # access the signal generator driver on the instrument server and set its frequency.
                     gw.drv.set_frequency(freq)
-                    # retrive the last counts entry
+                    # retrieve the last counts entry
                     counts = data['mydata'][-1][1]
                     # read the number of photon counts received by the photon counter.
-                    counts[f] = gw.drv.cnts(0.02)
+                    counts[f] = gw.drv.cnts(0.01)
                     # check for messages from the GUI
                     if msg_queue is not None:
                         try:
@@ -87,4 +82,4 @@ class SpinMeasurements:
 
 if __name__ == '__main__':
     exp = SpinMeasurements()
-    exp.odmr_sweep('odmr', 3e9, 4e9, 100, 2)
+    exp.odmr_sweep('odmr', 3e9, 4e9, 101, 50)

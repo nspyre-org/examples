@@ -16,9 +16,9 @@ from pathlib import Path
 # module containing your class to MainWidgetItem, since the python reload()
 # function does not recursively reload modules
 import gui_elements
-import nspyre.gui.widgets.save_widget
-import nspyre.gui.widgets.flex_line_plot_widget
-import nspyre.gui.widgets.snake_widget
+import nspyre.gui.widgets.save
+import nspyre.gui.widgets.flex_line_plot
+import nspyre.gui.widgets.snake
 from nspyre import MainWidget
 from nspyre import MainWidgetItem
 from nspyre import nspyre_init_logger
@@ -71,13 +71,13 @@ def main():
                     stretch=(100, 100),
                 ),
                 'FlexLinePlot': MainWidgetItem(
-                    nspyre.gui.widgets.flex_line_plot_widget,
+                    nspyre.gui.widgets.flex_line_plot,
                     'FlexLinePlotWidget',
                     stretch=(100, 100),
                 )
             },
-            'Save': MainWidgetItem(nspyre.gui.widgets.save_widget, 'SaveWidget', stretch=(1, 1)),
-            'Snake': MainWidgetItem(nspyre.gui.widgets.snake_widget, 'sssss'),
+            'Save': MainWidgetItem(nspyre.gui.widgets.save, 'SaveWidget', stretch=(1, 1)),
+            'Snake': MainWidgetItem(nspyre.gui.widgets.snake, 'sssss'),
         }
     )
     main_widget.show()
